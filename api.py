@@ -24,5 +24,5 @@ api.add_resource(Users, '/api/users/')
 def home():
     return '<h1> Flask REST API</h1>'
 
-if(__name__ == '__main__'):
-    app.run(debug=True)
+#if(__name__ == '__main__'):
+#    app.run(debug=True)
