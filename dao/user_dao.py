@@ -1,39 +1,78 @@
-from models.user_model import UserModel
-from models import db
+from config.db_config import Database
 
 class UserDAO:
 
+
     @staticmethod
     def getUsers():
-        return UserModel.query.all()
+
+        query = "SELECT id, nombre, email, telefono FROM Usuarios ORDER BY id"
+        results = Database.execute_query(query)
+        return results if results else []
     
     @staticmethod
     def post(user):
-        user = UserModel(nombre=user["nombre"], email=user["email"], telefono = user["telefono"])
-        db.session.add(user)
-        db.session.commit()
-        return user
-    
+        print(f"Insertando usuario: nombre={user['nombre']}, email={user['email']}, telefono={user['telefono']}", flush=True)
+        
+        query = """
+            INSERT INTO Usuarios (nombre, email, telefono) 
+            VALUES (%s, %s, %s)
+        """
+        params = (user["nombre"], user["email"], user["telefono"])
+        user_id = Database.execute_update(query, params)
+        
+        print(f"ID retornado: {user_id}", flush=True)
+        
+        if user_id:
+            inserted_user = UserDAO.getById(user_id)
+            print(f"Usuario en BD: {inserted_user}", flush=True)
+            
+            return {
+                "id": user_id,
+                "nombre": user["nombre"],
+                "email": user["email"],
+                "telefono": user["telefono"]
+            }
+        return None
 
-    #Metodos para un solo usuario
+    # Metodos para un solo usuario
     @staticmethod
     def getById(id):
-        return UserModel.query.filter_by(id=id).first()
+
+        query = "SELECT id, nombre, email, telefono FROM Usuarios WHERE id = %s"
+        results = Database.execute_query(query, (id,))
+        return results[0] if results else None
     
     @staticmethod
     def patch(user_id, user_args):
-        user= UserModel.query.filter_by(id=user_id).first()
-        if user:
-            user.nombre = user_args["nombre"]
-            user.email = user_args["email"]
-            user.telefono = user_args["telefono"]
-            db.session.commit()
-        return user
+
+        # Verificar si el usuario existe
+        user = UserDAO.getById(user_id)
+        if not user:
+            return None
+            
+        query = """
+            UPDATE Usuarios 
+            SET nombre = %s, email = %s, telefono = %s 
+            WHERE id = %s
+        """
+        params = (user_args["nombre"], user_args["email"], 
+                 user_args["telefono"], user_id)
+        
+        result = Database.execute_update(query, params)
+        
+        if result:
+            return UserDAO.getById(user_id)
+        return None
     
     @staticmethod
     def delete(user_id):
-        user = UserModel.query.filter_by(id=user_id).first()
+
+        # Obtener el usuario antes de eliminarlo
+        user = UserDAO.getById(user_id)
+        
         if user:
-            db.session.delete(user)
-            db.session.commit()
+            query = "DELETE FROM Usuarios WHERE id = %s"
+            Database.execute_update(query, (user_id,))
+            
         return user
