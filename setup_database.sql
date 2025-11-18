@@ -59,14 +59,33 @@ CREATE TABLE IF NOT EXISTS Tarifario (
     tarifa_volumen_adicional FLOAT,
     zona_geografica VARCHAR(50)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-    
+
+CREATE TABLE IF NOT EXISTS TipoEnvio(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(10) NOT NULL UNIQUE,
+    coeficiente FLOAT NOT NULL,
+    descripcion VARCHAR(256)
+);
+INSERT INTO TipoEnvio (nombre, coeficiente, descripcion) 
+VALUES ('Normal', 1.0, 'Entrega estándar en 5-7 días hábiles');
+
+INSERT INTO TipoEnvio (nombre, coeficiente, descripcion) 
+VALUES ('Urgente', 1.5, 'Entrega prioritaria en 2-3 días hábiles');
+
+INSERT INTO TipoEnvio (nombre, coeficiente, descripcion) 
+VALUES ('Express', 2.0, 'Entrega express en 24 horas');
+
+Select * from TipoEnvio;
+
+
     Select * from direccion;
-    
     Select * from Usuarios;
-    
     Select * from Warehouse;
-    
     Select * from cotizaciones;
+    Select * from tarifario;
+ 
+    
+    
     
     
     

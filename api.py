@@ -11,6 +11,8 @@ from resources.warehouses_resource import Warehouses
 from resources.warehouse_resource import warehouse
 from resources.tarifarios_resource import Tarifarios
 from resources.tarifario_resource import Tarifario
+from resources.costoEstimado_resource import CostoEstimado
+from resources.opcionesEnvio_resource import OpcionesEnvio
 
 
 import sys
@@ -37,6 +39,9 @@ api.add_resource(warehouse, '/api/warehouses/<int:id>')
 
 api.add_resource(Tarifarios, '/api/tarifarios/')
 api.add_resource(Tarifario, '/api/tarifarios/<int:id>')
+
+api.add_resource(CostoEstimado, '/api/calcularCostoEstimado/')
+api.add_resource(OpcionesEnvio, '/api/opcionesEnvio/')
 
 @app.route('/')
 def home():
