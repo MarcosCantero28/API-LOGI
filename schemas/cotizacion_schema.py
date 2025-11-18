@@ -7,7 +7,7 @@ cotizacion_args.add_argument('id_direccion_origen', type=int, required=True, hel
 cotizacion_args.add_argument('distancia_km', type=int, required=True, help="Distance in km cannot be blank")
 cotizacion_args.add_argument('cantidad_items', type=int, required=True, help="Number of items cannot be blank")
 cotizacion_args.add_argument('peso_kg', type=float, required=True, help="Weight in kg cannot be blank")
-cotizacion_args.add_argument('costo_estimado', type=float, required=True, help="Estimated cost cannot be blank")
+cotizacion_args.add_argument('costo_estimado', type=float, required=False, help="Estimated cost (auto-calculated if not provided)")
 cotizacion_args.add_argument('volumen_unidad', type=float, required=True, help="Volume per unit cannot be blank")
 cotizacion_args.add_argument('prioridad', type=int, required=True, help="Priority cannot be blank")
 

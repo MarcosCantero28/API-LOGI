@@ -20,8 +20,10 @@ CREATE TABLE IF NOT EXISTS Direccion(
     numero_calle INT NOT NULL,
     pais VARCHAR(100) NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
+    codigo_postal VARCHAR(10),
     latitud FLOAT,
-    longitud FLOAT
+    longitud FLOAT,
+    INDEX idx_codigo_postal (codigo_postal)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS Warehouse(
@@ -48,6 +50,15 @@ CREATE TABLE IF NOT EXISTS Cotizaciones (
     FOREIGN KEY (id_direccion_origen) REFERENCES Warehouse(id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_usuario (id_usuario)
     );
+
+CREATE TABLE IF NOT EXISTS Tarifario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_postal VARCHAR(10) NOT NULL UNIQUE,
+    tarifa_base FLOAT NOT NULL,
+    tarifa_kg_adicional FLOAT NOT NULL,
+    tarifa_volumen_adicional FLOAT,
+    zona_geografica VARCHAR(50)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
     
     Select * from direccion;
     

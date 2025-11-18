@@ -20,9 +20,9 @@ class Direccion(Resource):
         if not direccion:
             abort(404, "Direccion not found")
 
+    @marshal_with(direccionFields)
     def delete(self,id):
-        args = direccion_args.parse_args()
-
-        direccion = DireccionDAO.delete(id,args)
+        direccion = DireccionDAO.delete(id)
         if not direccion:
             abort(404, "Direccion not found")
+        return direccion

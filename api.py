@@ -9,6 +9,8 @@ from resources.direcciones_resource import Direcciones
 from resources.direccion_resource import Direccion
 from resources.warehouses_resource import Warehouses
 from resources.warehouse_resource import warehouse
+from resources.tarifarios_resource import Tarifarios
+from resources.tarifario_resource import Tarifario
 
 
 import sys
@@ -32,6 +34,9 @@ api.add_resource(Direccion, '/api/direcciones/<int:id>')
 
 api.add_resource(Warehouses, '/api/warehouses/')
 api.add_resource(warehouse, '/api/warehouses/<int:id>')
+
+api.add_resource(Tarifarios, '/api/tarifarios/')
+api.add_resource(Tarifario, '/api/tarifarios/<int:id>')
 
 @app.route('/')
 def home():
