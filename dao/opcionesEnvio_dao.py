@@ -5,7 +5,7 @@ class OpcionesEnvioDAO:
 
     @staticmethod
     def obtenerOpcionesEnvio(codigo_postal, peso_kg, volumen_unidad):
-        # Consultar tarifario directamente con el código postal
+
         query_tarifario = """
             SELECT tarifa_base, tarifa_kg_adicional, tarifa_volumen_adicional 
             FROM Tarifario 

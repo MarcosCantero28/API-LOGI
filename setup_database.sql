@@ -75,7 +75,49 @@ VALUES ('Urgente', 1.5, 'Entrega prioritaria en 2-3 días hábiles');
 INSERT INTO TipoEnvio (nombre, coeficiente, descripcion) 
 VALUES ('Express', 2.0, 'Entrega express en 24 horas');
 
+CREATE TABLE IF NOT EXISTS EstadoEnvio(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(256)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO EstadoEnvio (nombre, descripcion) 
+VALUES ('Pendiente', 'El envío ha sido registrado pero aún no se ha procesado');
+
+INSERT INTO EstadoEnvio (nombre, descripcion) 
+VALUES ('En tránsito', 'El envío está en camino hacia su destino');
+
+INSERT INTO EstadoEnvio (nombre, descripcion) 
+VALUES ('Entregado', 'El envío ha sido entregado al destinatario');
+
+INSERT INTO EstadoEnvio (nombre, descripcion) 
+VALUES ('Cancelado', 'El envío ha sido cancelado');
+
+CREATE TABLE IF NOT EXISTS Envio(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_postal VARCHAR(10) NOT NULL,
+    id_tipo_envio INT NOT NULL,
+    direccion_destino VARCHAR(500) NOT NULL,
+    localidad VARCHAR(100) NOT NULL,
+    provincia VARCHAR(100) NOT NULL,
+    pais VARCHAR(100) DEFAULT 'Argentina',
+    peso_kg FLOAT NOT NULL,
+    volumen_unidad FLOAT NOT NULL,
+    id_estado_envio INT DEFAULT 1,
+    nombre_receptor VARCHAR(255) NOT NULL,
+    dni_receptor VARCHAR(20) NOT NULL,
+    costo_total FLOAT NOT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_tipo_envio) REFERENCES TipoEnvio(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (id_estado_envio) REFERENCES EstadoEnvio(id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    INDEX idx_codigo_postal (codigo_postal),
+    INDEX idx_estado_envio (id_estado_envio),
+    INDEX idx_dni_receptor (dni_receptor)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 Select * from TipoEnvio;
+Select * from EstadoEnvio;
 
 
     Select * from direccion;
@@ -83,7 +125,9 @@ Select * from TipoEnvio;
     Select * from Warehouse;
     Select * from cotizaciones;
     Select * from tarifario;
- 
+	Select * from Envio;
+    
+
     
     
     

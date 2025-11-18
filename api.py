@@ -13,6 +13,8 @@ from resources.tarifarios_resource import Tarifarios
 from resources.tarifario_resource import Tarifario
 from resources.costoEstimado_resource import CostoEstimado
 from resources.opcionesEnvio_resource import OpcionesEnvio
+from resources.envios_resource import Envios
+from resources.envio_resource import Envio
 
 
 import sys
@@ -42,6 +44,9 @@ api.add_resource(Tarifario, '/api/tarifarios/<int:id>')
 
 api.add_resource(CostoEstimado, '/api/calcularCostoEstimado/')
 api.add_resource(OpcionesEnvio, '/api/opcionesEnvio/')
+
+api.add_resource(Envios, '/api/envios/')
+api.add_resource(Envio, '/api/envios/<int:id>')
 
 @app.route('/')
 def home():
